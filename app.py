@@ -124,7 +124,11 @@ if page == "Overview":
         if reports.empty: st.info("Severity analytics will appear after the first report.")
         else:
             counts = reports.severity.value_counts().reindex(["Critical","High","Medium","Low","Needs Review"], fill_value=0)
-            st.bar_chart(counts, height=230)
+            st.dataframe(
+                counts.rename("Number of incidents").reset_index(),
+                use_container_width=True,
+                hide_index=True
+            )
     st.divider()
     map_col, fleet_col = st.columns([1.2,.8], gap="large")
     with map_col:
